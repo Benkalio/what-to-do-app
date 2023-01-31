@@ -1,0 +1,24 @@
+{
+  "name": "what-to-do-app",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "if-env TYPE=server && (cd server && npm install) || (cd client && npm install)",
+    "server": "node ./server/server.js",
+    "client": "cd client && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Benkalio/what-to-do-app.git"
+  },
+  "author": "Tennyson Ben-kalio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Benkalio/what-to-do-app/issues"
+  },
+  "homepage": "https://github.com/Benkalio/what-to-do-app#readme",
+  "dependencies": {
+    "if-env": "^1.0.4"
+  }
+}
