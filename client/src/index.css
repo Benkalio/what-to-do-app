@@ -19,7 +19,8 @@ body {
   margin-top: 50px;
 }
 
-.button-container {
+.button-container, 
+.info-container {
   display: flex;
   align-items: center;
 }
@@ -32,10 +33,26 @@ body {
   border-radius: 12px;
 }
 
-.button-container button:hover {
+/* .button-container button:hover {
   background-color: aqua;
   cursor: pointer;
   border: transparent;
+} */
+
+.edit {
+  border: 1.5px solid rgb(141, 181,145 );
+  color: rgb(141, 181, 145);
+  text-transform: uppercase;
+}
+
+.edit:hover {
+  background-color: rgb(182, 223, 186);
+}
+
+.edit:active {
+  background-color: rgb(141, 181, 145);
+  color: rgb(255, 255, 255);
+  border: 1.5px solid rgb(141, 181,145 );
 }
 
 /* List Header */
@@ -47,3 +64,26 @@ body {
   border-bottom: rgba(0, 0, 0, 0.05) 1px solid;
 }
 
+/* List Item */
+
+.list-item {
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 0 0 1px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Tick Icon Style */
+
+.check-mark {
+  padding: 10px;
+}
+
+.check-mark path {
+  fill:none;
+  stroke:#000;
+  stroke-miterlimit:10;
+  stroke-width:32px;
+}
