@@ -1,0 +1,1 @@
+const insertTodo = "INSERT INTO todos (id, user_email, title, progress, date) VALUES('0', 'tennyson@test.com', 'First todo', 10, 'Wed Feb 1 2023 13:12:40 GMT+1 (West African Time)";
