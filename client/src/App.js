@@ -26,8 +26,8 @@ const App = () => {
 
   return (
     <div className="app">
-      <ListHeader listName={'New Year Resolution'} />
-      {sortedTasks?.map((task) => <ListItem key={task.id} task={task} />)}
+      <ListHeader listName={'New Year Resolution'} getData={getData} />
+      {sortedTasks?.map((task) => <ListItem key={task.id} task={task} getData={getData} />)}
     </div>
   );
 }
