@@ -9,7 +9,7 @@ const App = () => {
 
   const getData = async () => {
     try {
-      const response = await fetch(`http://localhost:7000/todos/${userEmail}`);
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${userEmail}`);
 
       const jsonResponse = await response.json()
       setTasks(jsonResponse)
