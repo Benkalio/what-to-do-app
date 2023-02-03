@@ -19,6 +19,8 @@ body {
   margin-top: 50px;
 }
 
+
+/* Buttons */
 .button-container, 
 .info-container {
   display: flex;
@@ -62,6 +64,7 @@ body {
 
 .delete:hover {
   background-color: rgb(255,201,193);
+  color: #fff;
 }
 
 .delete:active {
@@ -79,6 +82,42 @@ body {
   background-color: rgb(108,115,148);
   color: rgb(255,255,255);
 }
+
+.create:active {
+  background-color: rgb(108,115,148);
+  color: rgb(255, 255, 255);
+}
+
+.sign-out {
+  border: 1.5px solid rgb(255, 175, 163);
+  background-color: rgb(255, 175, 163) !important;
+  color: rgb(234, 234, 234);
+}
+
+.sign-out:hover {
+  background-color: rgb(175, 94,94) !important;
+  border: 1.5px solid rgb(175, 94,94);
+}
+
+.sign-out:active {
+  border: 1.5 solid rgb(175,81,81) !important;
+  background-color: rgb(175,81,81)!important;
+  color: rgb(255, 255, 255)!important;
+}
+
+/* Buttons ends */
+
+/* Inputs */
+
+input {
+  margin: 11px 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgb(230, 232, 236);
+}
+
+/* Inputs */
+
 
 /* List Header */
 
@@ -112,3 +151,50 @@ body {
   stroke-miterlimit:10;
   stroke-width:32px;
 }
+
+/* Modal styles */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  width: 500px;
+  padding: 40px;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+}
+
+.modal .form-title-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal .form-title-container button {
+  border: none;
+  background-color: transparent;
+}
+
+.modal.form-title-container button:active {
+  cursor: pointer;
+  color: rgb(255, 50, 50);
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal label {
+  font-size: 0.6rem;
+}
+
+/* Model style ends */
