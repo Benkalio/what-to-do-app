@@ -7,6 +7,8 @@ const Auth = () => {
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [error, setError] = useState(null);
 
+  console.log(email, password, confirmPassword);
+
   const viewLogin = (status) => {
     setError(null);
     setIsLogin(status);
@@ -20,7 +22,18 @@ const Auth = () => {
       return;
     }
 
-   await fetch(`${process.env.React_APP_SERVERURL}/${endpoint}`)
+    const response = await fetch(
+      `${process.env.React_APP_SERVERURL}/${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data);
   };
 
   return (
@@ -28,24 +41,51 @@ const Auth = () => {
       <div className="auth-container-box">
         <form className="form">
           <h2>{isLogin ? 'Please log in' : 'Please sign up'}</h2>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          {!isLogin && <input type="password" placeholder="Confirm Password" />}
-          <input type="submit" className="create"
-            onClick={(event) => handleSubmit(event, isLogin ? 'login' : 'signup')}
-   
-            />
+          <input
+            type="email"
+            placeholder="Email"
+            onChange={(event)=>setEmail(event.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(event)=>setPassword(event.target.value)}
+          />
+          {!isLogin && <input
+            type="password"
+            placeholder="Confirm Password" 
+            onChange={(event)=>setConfirmPassword(event.target.value)}
+            />}
+          <input
+            type="submit"
+            className="create"
+            onClick={(event) =>
+              handleSubmit(event, isLogin ? 'login' : 'signup')
+            }
+          />
           {error && <p>{error}</p>}
         </form>
         <div className="auth-options">
           <button
             onClick={() => viewLogin(false)}
-            style={{backgroundColor : !isLogin ? 'red' : 'green'}}
-          >Sign Up</button>
+            style={{
+              backgroundColor: !isLogin
+                ? 'rgb(255,255,255)'
+                : 'rgb(188,188,188)',
+            }}
+          >
+            Sign Up
+          </button>
           <button
             onClick={() => viewLogin(true)}
-            style={{backgroundColor : !isLogin ? 'red' : 'green'}}
-          >Login</button>
+            style={{
+              backgroundColor: isLogin
+                ? 'rgb(255,255,255)'
+                : 'rgb(188,188,188)',
+            }}
+          >
+            Login
+          </button>
         </div>
       </div>
     </div>

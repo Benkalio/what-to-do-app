@@ -1,6 +1,7 @@
 const PORT = process.env.PORT ?? 7000;
 const cors = require('cors'); 
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
 const pool = require('./db');
@@ -59,7 +60,30 @@ app.delete('/todos/:id', async (req, res) => {
   try {
     const deleteTodo = await pool.query('DELETE FROM todos WHERE id = $1', [id])
     res.json(deleteTodo);
+
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+//SIGNUP
+app.post('/signup', async (req, res) => {
+  const { email, password } = req.body;
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, salt);
+
+  try {
     
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+//LOGIN
+pp.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
   } catch (error) {
     console.error(error);
   }
