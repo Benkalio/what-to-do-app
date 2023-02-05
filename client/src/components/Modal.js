@@ -11,8 +11,8 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
   });
 
   // SENDING DATA TO THE DATABASE
-  const postData = async (e) => {
-    e.preventDefault();
+  const postData = async (event) => {
+    event.preventDefault();
     try {
       const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos`, {
         method: 'POST',
@@ -30,8 +30,8 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
   }
   //END OF SENDING DATA TO THE DATABASE
 
-  const editData = async (e) => {
-    e.preventDefault();
+  const editData = async (event) => {
+    event.preventDefault();
     try {
       const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`, {
         method: 'PUT',
@@ -55,7 +55,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
 
     // setData({...data, [name]: value });
 
-    // or use this.handle
+    // or use this
     setData((data) => ({
       ...data,
       [name]: value

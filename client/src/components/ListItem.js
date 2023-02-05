@@ -8,7 +8,7 @@ const ListItem = ({ task, getData }) => {
 
   const deleteItem = () => { 
     try {
-      const response = fetch(`http://localhost:7000/todos/${task.id}`, {
+      const response = fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`, {
         method: 'DELETE',
       });
       if (response.status === 200) { 
