@@ -21,7 +21,12 @@ const App = () => {
     }
   }
 
-  useEffect(() => getData, []);
+  useEffect(() => {
+    if (authToken) {
+      getData()
+    }
+  }
+  , []);
   console.log(tasks);
 
   // SORT TASK BY DATE
