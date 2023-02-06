@@ -2,3 +2,8 @@
 node_modules
 
 .DS_Store
+
+.vscode
+
+# package-lock file since it just causes merge conflicts
+package-lock.json

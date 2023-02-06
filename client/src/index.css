@@ -106,7 +106,9 @@ body {
 }
 
 /* Buttons ends */
-
+.task-title {
+  width: 300px;
+}
 /* Inputs */
 
 input {
@@ -233,3 +235,33 @@ input {
 } 
 
 /* Auth style ends */
+
+/* Copyright and User name display styles starts */
+.copyright {
+  font-size: 0.8rem;
+  margin: 0.8rem;
+  color: rgb(114,114,114);
+}
+
+.user-email {
+  float: right;
+  font-size: 0.8rem;
+  margin: 0.8rem;
+  color: rgb(114,114,114);
+}
+/* Copyright ends */
+
+/* PROGRESS BAR STYLES STARTS */
+.outer-bar {
+  width: 200px;
+  height: 14px;
+  background-color: rgb(216, 216, 216);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.inner-bar {
+  height: 14px;
+}
+
+/* PROGRESS BAR STYLES END */
