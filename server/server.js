@@ -77,7 +77,7 @@ app.post('/signup', async (req, res) => {
     const signUp = await pool.query(`INSERT INTO users (email, hashed_password VALUES ($1, $2)`,
       [email, hashedPassword]);
     
-    jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
+    const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
 
     res.json({email, token});
     
@@ -94,6 +94,21 @@ app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    const user = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
+
+    if (user.rows.length === 0) {
+      return res.status(401).json({ detail: 'User does not exist!' });
+    }
+
+    const loginSuccess = bcrypt.compareSync(password, user.rows[0].hashed_password);
+    const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
+
+    if (!loginSuccess) {
+      return res.status(401).json({ detail: 'Wrong password!' });
+    } else {
+      res.status(200).json({ 'email': user.rows[0].email, token });
+    }
+
   } catch (error) {
     console.error(error);
   }
