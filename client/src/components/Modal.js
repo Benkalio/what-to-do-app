@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCookies } from "react-cookies";
+import { useCookies } from "react-cookie";
 
 const Modal = ({ mode, setShowModal, getData, task }) => {
   const [cookies, setCookie, removeCookie] = useCookies(null);

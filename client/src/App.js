@@ -5,7 +5,7 @@ import ListHeader from "./components/ListHeader";
 import ListItem from "./components/ListItem";
 
 const App = () => {
-  const [cookies, setCookee, removeCookie] = useCookies(null);
+  const [cookies, setCookie, removeCookie] = useCookies(null);
 
   const authToken = cookies.AuthToken;
   const userEmail = cookies.Email;

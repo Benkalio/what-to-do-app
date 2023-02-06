@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 
 const Auth = () => {
-  const [cookie, setCookie, removeCookie] = useCookies(null)
+  const [cookies, setCookie, removeCookie] = useCookies(null);
 
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState(null);
@@ -26,7 +26,7 @@ const Auth = () => {
     }
 
     const response = await fetch(
-      `${process.env.React_APP_SERVERURL}/${endpoint}`, {
+      `${process.env.REACT_APP_SERVERURL}/${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
