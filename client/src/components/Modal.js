@@ -17,26 +17,24 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
   const postData = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
       if (response.status === 200) {
-        console.log('Here is the response');
         setShowModal(false);
         getData();
       } 
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
-  //END OF SENDING DATA TO THE DATABASE
 
   const editData = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -56,13 +54,13 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
     
     const { name, value } = e.target;
 
-    // setData({...data, [name]: value });
+    setData({...data, [name]: value });
 
     // or use this
-    setData((data) => ({
-      ...data,
-      [name]: value
-    }))
+    // setData((data) => ({
+    //   ...data,
+    //   [name]: value
+    // }))
 
     console.log(data);
   };
@@ -72,15 +70,10 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
       <div className="modal">
         <div className="form-title-container">
           <h3>Let's {mode} your task.</h3>
-          <button
-            onClick={() => setShowModal(false)}
-            className="">
-            X
-          </button>
+          <button onClick={() => setShowModal(false)}>X</button>
         </div>
         <form className="modal-form">
           <input
-            type="text"
             maxLength={30}
             placeholder="Add task here" 
             name="title"
@@ -89,7 +82,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
             required
           />
           <br />
-          <label for="">Drag to update your progress</label>
+          <label htmlFor="range">Drag to update your progress</label>
           <input
             required
             id="range"
@@ -97,11 +90,10 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
             min="0"
             max="100"
             name="progress"
-            placeholder="Description"
             value={data.progress}
             onChange={handleChange}
           />
-          <input className={mode} type="submit" onClick={editMode ? editData: postData} />
+          <input className={mode} type="submit" onClick={editMode ? editData : postData} />
         </form>
       </div>
     </div>

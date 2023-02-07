@@ -10,17 +10,12 @@ const pool = require('./db');
 app.use(cors());
 app.use(express.json());
 
-// TESTING SERVER
-app.get('/', (req, res) => {
-  res.send('Hello world')
-});
-
 //GET ALL TODOS
 app.get('/todos/:user_email', async (req, res) => {
-  const { user_email } = req.params;
+  const { userEmail } = req.params;
   
   try {
-    const todos = await pool.query(`SELECT * FROM todos WHERE user_email = $1`, [user_email]);
+    const todos = await pool.query('SELECT * FROM todos WHERE user_email = $1;', [userEmail]);
     res.json(todos.rows);
   } catch (error) {
     console.log(error);
@@ -30,12 +25,12 @@ app.get('/todos/:user_email', async (req, res) => {
 // CREATE A NEW TODO
 app.post('/todos', async (req, res) => {
   const { user_email, title, progress, date } = req.body;
-  console.log(user_email, title, progress, date);
   const id = uuidv4();
   try {
-    const newTask = await pool.query(`INSERT INTO todos (id, user_email, title, progress, date) VALUES($1, $2, $3, $4, $5')`
+    const newTodo = await pool.query(
+      `INSERT INTO todos (id, user_email, title, progress, date) VALUES($1, $2, $3, $4, $5');`
     [id, user_email, title, progress, date]);
-    res.json(newTask);
+    res.json(newTodo);
   } catch (error) {
     console.error(error);
   }
@@ -47,7 +42,7 @@ app.put('/todos/:id', async (req, res) => {
   const { user_email, title, progress, date } = req.body;
   try {
     const editTodo = await pool
-      .query(`UPDATE todos SET user_email = $1, title = $2, progress = $3, date = $4 WHERE id = $5;`,
+      .query('UPDATE todos SET user_email = $1, title = $2, progress = $3, date = $4 WHERE id = $5;',
         [user_email, title, progress, date, id]);
     res.json(editTodo);
   } catch (error) {
@@ -59,7 +54,7 @@ app.put('/todos/:id', async (req, res) => {
 app.delete('/todos/:id', async (req, res) => { 
   const { id } = req.params;
   try {
-    const deleteTodo = await pool.query(`DELETE FROM todos WHERE id = $1', [id]`)
+    const deleteTodo = await pool.query('DELETE FROM todos WHERE id = $1;', [id])
     res.json(deleteTodo);
 
   } catch (error) {
@@ -74,17 +69,17 @@ app.post('/signup', async (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, salt);
 
   try {
-    const signUp = await pool.query(`INSERT INTO users (email, hashed_password VALUES ($1, $2)`,
+    const signUp = await pool.query(`INSERT INTO users (email, hashed_password VALUES ($1, $2);`,
       [email, hashedPassword]);
     
     const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
 
-    res.json({email, token});
+    res.json({ email, token });
     
   } catch (error) {
     console.error(error);
     if (error) {
-      res.json({detail: error.detail})
+      res.json({ detail: error.detail });
     }
   }
 });
@@ -94,17 +89,17 @@ app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
+    const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
     if (user.rows.length === 0) {
-      return res.status(401).json({ detail: 'User does not exist!' });
+       res.status(401).json({ detail: 'User does not exist!' });
     }
 
-    const loginSuccess = bcrypt.compareSync(password, user.rows[0].hashed_password);
+    const loginSuccess = bcrypt.compare(password, user.rows[0].hashed_password);
     const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
 
     if (!loginSuccess) {
-      return res.status(401).json({ detail: 'Wrong password!' });
+      res.status(401).json({ detail: 'Wrong password!' });
     } else {
       res.status(200).json({ 'email': user.rows[0].email, token });
     }
