@@ -1,10 +1,10 @@
-const PORT = process.env.PORT ?? 7000;
 const express = require('express');
 const cors = require('cors'); 
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();
+const PORT = process.env.PORT ?? 7000;
 const pool = require('./db');
 
 app.use(cors());
@@ -15,7 +15,7 @@ app.get('/todos/:user_email', async (req, res) => {
   const { userEmail } = req.params;
   
   try {
-    const todos = await pool.query('SELECT * FROM todos WHERE user_email = $1;', [userEmail]);
+    const todos = await pool.query('SELECT * FROM todos WHERE user_email = $1', [userEmail]);
     res.json(todos.rows);
   } catch (error) {
     console.log(error);
@@ -27,10 +27,10 @@ app.post('/todos', async (req, res) => {
   const { user_email, title, progress, date } = req.body;
   const id = uuidv4();
   try {
-    const newTodo = await pool.query(
-      `INSERT INTO todos (id, user_email, title, progress, date) VALUES($1, $2, $3, $4, $5');`
+    const newToDo = await pool.query(
+      `INSERT INTO todos (id, user_email, title, progress, date) VALUES ($1, $2, $3, $4, $5) RETURNING (title, progress)`,
     [id, user_email, title, progress, date]);
-    res.json(newTodo);
+    res.json(newToDo);
   } catch (error) {
     console.error(error);
   }
@@ -69,7 +69,7 @@ app.post('/signup', async (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, salt);
 
   try {
-    const signUp = await pool.query(`INSERT INTO users (email, hashed_password VALUES ($1, $2);`,
+    const signUp = await pool.query('INSERT INTO users (email, hashed_password) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]);
     
     const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });

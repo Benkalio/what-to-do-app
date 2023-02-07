@@ -10,7 +10,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
     user_email: editMode ? task.user_email : cookies.Email,
     title: editMode ? task.title : null,
     progress: editMode ? task.progress : 50,
-    date: editMode ? task.data : new Date()
+    date: editMode ? task.date : new Date()
   });
 
   // SENDING DATA TO THE DATABASE
@@ -22,12 +22,12 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      if (response.status === 200) {
+      if (response.status === 201) {
         setShowModal(false);
         getData();
       } 
     } catch (error) {
-      console.error(error);
+      console.error(error.detail);
     }
   }
 
@@ -65,6 +65,11 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
     console.log(data);
   };
 
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   setData(data.value)
+  // }
+
   return (
     <div className="overlay">
       <div className="modal">
@@ -82,7 +87,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
             required
           />
           <br />
-          <label htmlFor="range">Drag to update your progress</label>
+          <label className="range-label" htmlFor="range">Drag to update your progress</label>
           <input
             required
             id="range"

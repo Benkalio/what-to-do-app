@@ -6,9 +6,9 @@ import Modal from './Modal';
 const ListItem = ({ task, getData }) => {
   const [showModal, setShowModal] = useState(false);
 
-  const deleteItem = () => { 
+  const deleteItem = async () => { 
     try {
-      const response = fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${task.id}`, {
         method: 'DELETE',
       });
       if (response.status === 200) { 
@@ -23,7 +23,7 @@ const ListItem = ({ task, getData }) => {
     <li className="list-item">
       <div className="info-container">
         <TickIcon />
-        <p>{task.date}</p>
+        <p className="task-title">{task.title}</p>
         <ProgressBar progress={task.progress} />
       </div>
 
